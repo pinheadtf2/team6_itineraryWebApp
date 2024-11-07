@@ -1,9 +1,22 @@
 <html lang="en-US">
 <head>
-    <title>Sample app</title>
+    <title>Landing | team6_itineraryWebApp</title>
     <link rel="stylesheet" href="/static/style.css"/>
 </head>
 <body>
-    <h1>Hello!</h1>
+    <h1>Welcome to team6's Itinerary!</h1>
+    {% for para in error %}
+        <span style="color: #a00">{{para}}</span>
+        <br>
+    {% endfor %}
+    <form method="POST">
+        <label for="location">Enter your location of choice:</label>
+        <input type="text" name="location" id="location">
+        <br>
+        <label for="radius">Search Radius:</label>
+        <input type="text" name="radius" id="radius">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
 </body>
 </html>
