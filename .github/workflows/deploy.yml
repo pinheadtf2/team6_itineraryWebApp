@@ -1,0 +1,38 @@
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker
+      uses: docker/setup-buildx-action@v1
+
+    - name: Build Docker image
+      run: docker build -t your_dockerhub_username/travel-planner .
+
+    - name: Login to Docker Hub
+      run: echo "${{ gr3enBone82 }}" | docker login -u "${{ rexanator96 }}" --password-stdin
+
+    - name: Push Docker image
+      run: docker push your_dockerhub_username/travel-planner
+
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ team6itinerarywebapp.eastus.cloudapp.azure.com }}
+        script: |
+          docker pull your_dockerhub_username/travel-planner
+          docker stop travel-planner || true
+          docker rm travel-planner || true
+          docker run -d -p 8080:8080 -v ~/.env /home/itineraryplanner/.env --name travel-planner your_dockerhub_username/travel-planner
