@@ -35,4 +35,4 @@ jobs:
           docker pull your_dockerhub_username/travel-planner
           docker stop travel-planner || true
           docker rm travel-planner || true
-          docker run -d -p 8080:8080 --name travel-planner your_dockerhub_username/travel-planner
+          docker run -d -p 8080:8080 -v ~/.env /home/itineraryplanner/.env --name travel-planner your_dockerhub_username/travel-planner
