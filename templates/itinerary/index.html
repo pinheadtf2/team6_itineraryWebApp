@@ -2,11 +2,72 @@
 <head>
     <title>Itinerary | team6_itineraryWebApp</title>
     <link rel="stylesheet" href="/static/style.css"/>
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 </head>
 <body>
-    <h1>Itinerary</h1>
-    <p>Here is your weather: {{weather["current"]["condition"]["text"]}}</p>
-    <p>Attractions: {{attractions}}</p>
-    <p>Restaurants: {{restaurants}}</p>
+<div class="itinerary">
+    <h1 style="margin-bottom: 8px">Itinerary for {{location['name']}}, {{location['region']}}, {{location['country']}}</h1>
+
+    <div class="panel">
+        <h2>Weather</h2>
+        <div class="sub_panel weather_body">
+            <img src={{weather["current"]["condition"]["icon"]}} style="float: left; width: 64px" alt="Weather icon">
+            <p>
+                {{weather["current"]["condition"]["text"]}} ({{weather["current"]["vis_miles"]}} mi vis)
+                <br>
+                {{weather["current"]["temp_f"]}}°F ({{weather["forecast"]["forecastday"][0]["day"]["maxtemp_f"]}}°F peak) @
+                {{weather["current"]["humidity"]}}% humidity
+                <br>
+                {{weather["current"]["precip_in"]}} in
+                ({{weather["forecast"]["forecastday"][0]["day"]["totalprecip_in"]}}in today) |
+                {{weather["current"]["precipitation"]["chance"]}}% Risk of {{weather["current"]["precipitation"]["type"]}}
+                <br>
+                {{weather["current"]["wind_mph"]}}-{{weather["current"]["gust_mph"]}} mph {{weather["current"]["wind_arrow"]}}
+            </p>
+        </div>
+    </div>
+    <br>
+
+    <div class="panel">
+        <h2>Attractions</h2>
+        {% for place in attractions %}
+            <div class="sub_panel">
+                <h3 class="panel_title"><a href={{place["link"]}}>{{place["name"]}}</a></h3>
+                <h4 class="panel_subtitle">{{place["address"]}}</h4>
+                <hr>
+                <p>
+                    <b>Rating:</b> {{place["rating"]}} ({{place["total_ratings"]}} reviews)
+                    <br>
+                    <b>Status:</b> {{place["is_open"]}} ({{place["status"]}})
+                    <br>
+                    <b>Pricing:</b> {{place["price_level"]}}
+                </p>
+            </div>
+            <br>
+        {% endfor %}
+    </div>
+    <br>
+
+    <div class="panel">
+        <h2>Restaurants</h2>
+        {% for place in restaurants %}
+            <div class="sub_panel">
+                <h3 class="panel_title"><a href={{place["link"]}}>{{place["name"]}}</a></h3>
+                <h4 class="panel_subtitle">{{place["address"]}}</h4>
+                <hr>
+                <p>
+                    <b>Rating:</b> {{place["rating"]}} ({{place["total_ratings"]}} reviews)
+                    <br>
+                    <b>Status:</b> {{place["is_open"]}} ({{place["status"]}})
+                    <br>
+                    <b>Pricing:</b> {{place["price_level"]}}
+                </p>
+            </div>
+            <br>
+        {% endfor %}
+    </div>
+    <br>
+</div>
 </body>
 </html>

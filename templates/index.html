@@ -5,18 +5,25 @@
 </head>
 <body>
     <h1>Welcome to team6's Itinerary!</h1>
-    {% for para in error %}
-        <span style="color: #a00">{{para}}</span>
-        <br>
-    {% endfor %}
-    <form method="POST">
-        <label for="location">Enter your location of choice:</label>
-        <input type="text" name="location" id="location">
-        <br>
-        <label for="radius">Search Radius:</label>
-        <input type="text" name="radius" id="radius">
-        <br>
-        <button type="submit">Submit</button>
-    </form>
+    {% if error %}
+        <div class="panel">
+            {% for para in error %}
+                <span style="color: #a00">{{para}}</span>
+                <br>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="panel">
+        <form method="POST">
+            <label for="location">Enter your location of choice:</label>
+            <input type="text" name="location" id="location" value="Menomonie">
+            <br>
+            <label for="radius">Search Radius:</label>
+            <input type="text" name="radius" id="radius" value="5000">
+            <br>
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 </body>
 </html>

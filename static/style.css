@@ -1,3 +1,136 @@
+:root {
+    --rosewater: #f5e0dc;
+    --flamingo: #f2cdcd;
+    --pink: #f5c2e7;
+    --mauve: #cba6f7;
+    --red: #f38ba8;
+    --maroon: #eba0ac;
+    --peach: #fab387;
+    --yellow: #f9e2af;
+    --green: #a6e3a1;
+    --teal: #94e2d5;
+    --sky: #89dceb;
+    --sapphire: #74c7ec;
+    --blue: #89b4fa;
+    --lavender: #b4befe;
+    --text: #cdd6f4;
+    --subtext1: #bac2de;
+    --subtext0: #a6adc8;
+    --overlay2: #9399b2;
+    --overlay1: #7f849c;
+    --overlay0: #6c7086;
+    --surface2: #585b70;
+    --surface1: #45475a;
+    --surface0: #313244;
+    --base: #1e1e2e;
+    --mantle: #181825;
+    --crust: #11111b;
+
+    font-family: Inter, sans-serif;
+    font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
+}
+
+@supports (font-variation-settings: normal) {
+    :root {
+        font-family: InterVariable, sans-serif;
+    }
+}
+
 body {
-    background: lightsteelblue;
+    background: var(--base);
+    color: var(--text);
+
+    h1, h2, h3, h4, h5, h6 {
+        margin: 0;
+        font-weight: normal;
+    }
+
+    hr {
+        border-color: var(--overlay2);
+    }
+
+    p {
+        margin: 4px 0;
+    }
+
+    a {
+        color: var(--blue);
+    }
+
+    .rosewater {
+        color: var(--rosewater);
+    }
+
+    .flamingo {
+        color: var(--flamingo);
+    }
+
+    .pink {
+        color: var(--pink);
+    }
+
+    .mauve {
+        color: var(--mauve);
+    }
+
+    .red {
+        color: var(--red);
+    }
+
+    .maroon {
+        color: var(--maroon);
+    }
+
+    .peach {
+        color: var(--peach);
+    }
+
+    .yellow {
+        color: var(--yellow);
+    }
+
+    .green {
+        color: var(--green);
+    }
+
+    .teal {
+        color: var(--teal);
+    }
+
+    .sky {
+        color: var(--sky);
+    }
+
+    .sapphire {
+        color: var(--sapphire);
+    }
+
+    .blue {
+        color: var(--blue);
+    }
+
+    .lavender {
+        color: var(--lavender);
+    }
+
+    .panel {
+        background: var(--surface0);
+        padding: 4px;
+    }
+
+    .sub_panel {
+        background: var(--surface1);
+        margin-left: 12px;
+        padding: 4px;
+    }
+
+    .panel_title {
+        font-weight: bold;
+    }
+
+    .panel_subtitle {
+        color: var(--subtext0);
+        font-style: italic;
+        font-weight: normal;
+    }
 }
