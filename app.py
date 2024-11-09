@@ -12,11 +12,11 @@ app = Quart(__name__)
 # required to have this, so you get to deal with it now too
 app.secret_key = "sigma sigma on the wall, who is the skibidiest of them all"
 
+subprocess.run(['cp', 'temp/.env', '/team6_itinerarywebapp/.env'])
+
 load_dotenv()
 weather_key = getenv("WEATHERAPI_KEY")
 google_places_key = getenv("GOOGLE_PLACES_KEY")
-
-subprocess.run(['cp', 'temp/.env', '/.env'])
 
 class LocationNotFound(Exception):
     pass
