@@ -1,8 +1,8 @@
-FROM Python
-COPY ./templates to_docker/templates
-COPY ./static to_docker/static
-COPY requirements.txt to_docker/requirements.txt
-COPY main.py to_docker/main.py
-RUN pip install -r ./requirements.txt
-EXPOSE 8080
-CMD main.py
+FROM python
+COPY ./templates /team6_itinerarywebapp/templates
+COPY ./static /team6_itinerarywebapp/static
+COPY requirements.txt /
+COPY app.py /team6_itinerarywebapp/app.py
+RUN pip install -r requirements.txt
+EXPOSE 5000
+CMD ["python", "/team6_itinerarywebapp/app.py"]
