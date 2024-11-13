@@ -30,7 +30,7 @@ jobs:
       with:
         host: team6itinerarywebapp.eastus.cloudapp.azure.com
         username: azureuser
-        key: LinuxServerKey.pem
+        key: LinuxServerKey
         script: |
           docker pull your_dockerhub_username/travel-planner
           docker stop travel-planner || true
