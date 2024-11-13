@@ -21,7 +21,7 @@ jobs:
       run: docker build -t  rexanator96/team6_itinerarywebapp:latest .
 
     - name: Login to Docker Hub
-      run: echo "${{ secrets.DOCKERPASS }}" | docker login -u "${{ rexanator96 }}" --password-stdin
+      run: echo "${{ secrets.DOCKERPASS }}" | docker login -u "rexanator96" --password-stdin
 
     - name: Push Docker image
       run: docker push rexanator96/team6_itinerarywebapp:latest
