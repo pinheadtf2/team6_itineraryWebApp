@@ -7,34 +7,59 @@
 </head>
 <body>
 <div class="itinerary">
-    <h1 style="margin-bottom: 8px">Itinerary for {{location['name']}}, {{location['region']}}, {{location['country']}}</h1>
+    <h1 style="width: 100%">Itinerary for {{location['name']}}, {{location['region']}},
+        {{location['country']}}</h1>
+    <hr style="width: 100%; margin: 12px 0;">
 
-    <div class="panel">
-        <h2>Weather</h2>
+    <div class="panel weather">
+        <h2 class="panel_title">Weather</h2>
         <div class="sub_panel weather_body">
             <img src={{weather["current"]["condition"]["icon"]}} style="float: left; width: 64px" alt="Weather icon">
             <p>
                 {{weather["current"]["condition"]["text"]}} ({{weather["current"]["vis_miles"]}} mi vis)
                 <br>
-                {{weather["current"]["temp_f"]}}°F ({{weather["forecast"]["forecastday"][0]["day"]["maxtemp_f"]}}°F peak) @
+                {{weather["current"]["temp_f"]}}°F ({{weather["forecast"]["forecastday"][0]["day"]["maxtemp_f"]}}°F
+                peak) @
                 {{weather["current"]["humidity"]}}% humidity
                 <br>
                 {{weather["current"]["precip_in"]}} in
                 ({{weather["forecast"]["forecastday"][0]["day"]["totalprecip_in"]}}in today) |
-                {{weather["current"]["precipitation"]["chance"]}}% Risk of {{weather["current"]["precipitation"]["type"]}}
+                {{weather["current"]["precipitation"]["chance"]}}% Risk of
+                {{weather["current"]["precipitation"]["type"]}}
                 <br>
-                {{weather["current"]["wind_mph"]}}-{{weather["current"]["gust_mph"]}} mph {{weather["current"]["wind_arrow"]}}
+                {{weather["current"]["wind_mph"]}}-{{weather["current"]["gust_mph"]}} mph
+                {{weather["current"]["wind_arrow"]}}
             </p>
         </div>
+        <br>
     </div>
-    <br>
 
-    <div class="panel">
-        <h2>Attractions</h2>
-        {% for place in attractions %}
+    <div class="row-ifier">
+        <div class="panel attractions">
+            <h2 class="panel_title">Attractions</h2>
+            {% for place in attractions %}
             <div class="sub_panel">
-                <h3 class="panel_title"><a href={{place["link"]}}>{{place["name"]}}</a></h3>
-                <h4 class="panel_subtitle">{{place["address"]}}</h4>
+                <h3 class="subpanel_title"><a href={{place["link"]}}>{{place["name"]}}</a></h3>
+                <h4 class="subpanel_subtitle">{{place["address"]}}</h4>
+                <hr>
+                <p>
+                    <b>Rating:</b> {{place["rating"]}} ({{place["total_ratings"]}} reviews)
+                    <br>
+                    <b>Status:</b> {{place["is_open"]}} ({{place["status"]}})
+                    <br>
+                    <span class="subtext"><br>Tags: {{place["types"]}}</span>
+                </p>
+            </div>
+            <br>
+            {% endfor %}
+        </div>
+
+        <div class="panel resturaunts">
+            <h2 class="panel_title">Restaurants</h2>
+            {% for place in restaurants %}
+            <div class="sub_panel">
+                <h3 class="subpanel_title"><a href={{place["link"]}}>{{place["name"]}}</a></h3>
+                <h4 class="subpanel_subtitle">{{place["address"]}}</h4>
                 <hr>
                 <p>
                     <b>Rating:</b> {{place["rating"]}} ({{place["total_ratings"]}} reviews)
@@ -42,32 +67,14 @@
                     <b>Status:</b> {{place["is_open"]}} ({{place["status"]}})
                     <br>
                     <b>Pricing:</b> {{place["price_level"]}}
+                    <br>
+                    <span class="subtext"><br>Tags: {{place["types"]}}</span>
                 </p>
             </div>
             <br>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
-    <br>
-
-    <div class="panel">
-        <h2>Restaurants</h2>
-        {% for place in restaurants %}
-            <div class="sub_panel">
-                <h3 class="panel_title"><a href={{place["link"]}}>{{place["name"]}}</a></h3>
-                <h4 class="panel_subtitle">{{place["address"]}}</h4>
-                <hr>
-                <p>
-                    <b>Rating:</b> {{place["rating"]}} ({{place["total_ratings"]}} reviews)
-                    <br>
-                    <b>Status:</b> {{place["is_open"]}} ({{place["status"]}})
-                    <br>
-                    <b>Pricing:</b> {{place["price_level"]}}
-                </p>
-            </div>
-            <br>
-        {% endfor %}
-    </div>
-    <br>
 </div>
 </body>
 </html>

@@ -5,10 +5,10 @@
 </head>
 <body>
     <h1>Welcome to team6's Itinerary!</h1>
-    {% if error %}
+    {% if error|length > 1 %}
         <div class="panel">
             {% for para in error %}
-                <span style="color: #a00">{{para}}</span>
+                <span class="red">{{para}}</span>
                 <br>
             {% endfor %}
         </div>

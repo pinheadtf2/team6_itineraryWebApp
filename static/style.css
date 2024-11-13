@@ -113,9 +113,15 @@ body {
         color: var(--lavender);
     }
 
+    .itinerary {
+        display: flex;
+        flex-direction: column;
+    }
+
     .panel {
         background: var(--surface0);
         padding: 4px;
+        margin: 8px 0;
     }
 
     .sub_panel {
@@ -126,11 +132,36 @@ body {
 
     .panel_title {
         font-weight: bold;
+        padding-left: 2px;
     }
 
-    .panel_subtitle {
+    .subpanel_title {
+        font-weight: bold;
+    }
+
+    .subpanel_subtitle {
         color: var(--subtext0);
         font-style: italic;
         font-weight: normal;
+    }
+
+    .row-ifier {
+        display: flex;
+    }
+
+    .attractions {
+        margin-right: 8px;
+        width: 80%;  /* Slight offset is nicer on the eyes */
+    }
+
+    .resturaunts {
+        margin-left: 8px;
+        width: 100%;
+    }
+
+    .subtext {
+        font-size: 10px;
+        font-style: italic;
+        color: var(--subtext0);
     }
 }
