@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: DOCKERPASS
 
     steps:
     - name: Checkout code
@@ -30,7 +31,7 @@ jobs:
       with:
         host: team6itinerarywebapp.eastus.cloudapp.azure.com
         username: azureuser
-        key: LinuxServerKey
+        key: ${{ secrets.LinuxServerKey}}
         script: |
           docker pull your_dockerhub_username/travel-planner
           docker stop travel-planner || true
