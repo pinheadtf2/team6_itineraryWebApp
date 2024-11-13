@@ -17,22 +17,22 @@ jobs:
       uses: docker/setup-buildx-action@v1
 
     - name: Build Docker image
-      run: docker build -t your_dockerhub_username/travel-planner .
+      run: docker build -t  rexanator96/team6_itinerarywebapp:latest .
 
     - name: Login to Docker Hub
       run: echo "${{ gr3enBone82 }}" | docker login -u "${{ rexanator96 }}" --password-stdin
 
     - name: Push Docker image
-      run: docker push your_dockerhub_username/travel-planner
+      run: docker push rexanator96/team6_itinerarywebapp:latest
 
     - name: Deploy to EC2
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ team6itinerarywebapp.eastus.cloudapp.azure.com }}
+        host: team6itinerarywebapp.eastus.cloudapp.azure.com
+        username: azureuser
+        key: LinuxServerKey.pem
         script: |
           docker pull your_dockerhub_username/travel-planner
           docker stop travel-planner || true
           docker rm travel-planner || true
-          docker run -d -p 8080:8080 -v ~/.env /home/itineraryplanner/.env --name travel-planner your_dockerhub_username/travel-planner
+          docker run -d -p 5000:5000 --volume $(pwd):/temp --name test rexanator96/team6_itinerarywebapp:latest
