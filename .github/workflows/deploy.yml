@@ -33,7 +33,7 @@ jobs:
         username: azureuser
         key: ${{ secrets.LinuxServerKey}}
         script: |
-          sudo docker pull your_dockerhub_username/travel-planner
+          sudo docker pull rexanator96/team6_itinerarywebapp:latest
           sudo docker stop travel-planner || true
           sudo docker rm travel-planner || true
-          sudo docker run -d -p 5000:5000 --volume $(pwd):/temp --name test rexanator96/team6_itinerarywebapp:latest
+          sudo docker run -d -p 5000:5000 --volume $(pwd):/temp --name travel-planner rexanator96/team6_itinerarywebapp:latest
