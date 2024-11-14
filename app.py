@@ -205,6 +205,7 @@ async def index():
             radius = int(session['radius'])
             if 1000 > radius > 50000:
                 session['error'] = "RadiusInvalid"
+                return redirect(url_for("index"))
         except ValueError:
             session['error'] = "RadiusInvalid"
             return redirect(url_for("index"))
