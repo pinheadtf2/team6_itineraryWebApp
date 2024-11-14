@@ -112,13 +112,13 @@ async def get_places(client_session: aiohttp.ClientSession, latitude, longitude,
                     price_level = "Inexpensive"
                 case 2:
                     price_level = "Moderate"
-                    price_color = "orange"
+                    price_color = "peach"
                 case 3:
                     price_level = "Expensive"
-                    price_color = "orange"
+                    price_color = "peach"
                 case 4:
                     price_level = "Very Expensive"
-                    price_color = "orange"
+                    price_color = "peach"
                 case _:
                     price_level = "N/A"
                     price_color = "subtext0 italics"
