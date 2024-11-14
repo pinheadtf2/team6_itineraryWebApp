@@ -1,3 +1,4 @@
+import subprocess
 import traceback
 from os import getenv
 from urllib import request
@@ -5,8 +6,6 @@ from urllib import request
 import aiohttp
 from dotenv import load_dotenv
 from quart import Quart, session, redirect, request, url_for, render_template
-
-import subprocess
 
 app = Quart(__name__)
 # required to have this, so you get to deal with it now too
@@ -17,6 +16,7 @@ subprocess.run(['cp', 'temp/.env', '/team6_itinerarywebapp/.env'])
 load_dotenv()
 weather_key = getenv("WEATHERAPI_KEY")
 google_places_key = getenv("GOOGLE_PLACES_KEY")
+
 
 class LocationNotFound(Exception):
     pass
@@ -88,14 +88,23 @@ async def get_places(client_session: aiohttp.ClientSession, latitude, longitude,
                                       "key": google_places_key
                                   }) as response:
         results = await response.json()
-        attractions = []
+        places = []
         for place in results["results"]:
             name = place["name"]
             address = place["vicinity"]
-            rating = place.get("rating")
-            total_ratings = place.get("user_ratings_total", 0)
-            price_level = place.get("price_level")
 
+            rating = place.get("rating", 0)
+            rating_color = ""
+            if 1 <= rating <= 3.5:
+                rating_color = "yellow"
+
+            total_ratings = place.get("user_ratings_total", 0)
+            total_rating_color = ""
+            if total_ratings < 25:
+                total_rating_color = "yellow"
+
+            price_level = place.get("price_level")
+            price_color = ""
             match price_level:
                 case 0:
                     price_level = "Free"
@@ -103,36 +112,63 @@ async def get_places(client_session: aiohttp.ClientSession, latitude, longitude,
                     price_level = "Inexpensive"
                 case 2:
                     price_level = "Moderate"
+                    price_color = "orange"
                 case 3:
                     price_level = "Expensive"
+                    price_color = "orange"
                 case 4:
                     price_level = "Very Expensive"
+                    price_color = "orange"
                 case _:
                     price_level = "N/A"
+                    price_color = "subtext0 italics"
 
-            try:
-                if place["opening_hours"]["open_now"]:
+            open_color = ""
+            opening_hours = place.get("opening_hours")
+            if opening_hours:
+                if opening_hours.get("open_now"):
                     is_open = "Currently Open"
                 else:
                     is_open = "Closed"
-            except Exception as error:
+                    open_color = "red"
+            elif place["business_status"] == "CLOSED_TEMPORARILY":
+                is_open = "Temporarily Shut Down"
+                open_color = "red"
+            elif place["business_status"] == "CLOSED_PERMANENTLY":
+                continue
+            else:
                 is_open = "N/A"
-            status = place["business_status"].title().replace("_", " ")
+                open_color = "subtext0 italics"
+
             types = place["types"]
             link = f'https://www.google.com/maps/place/?q=place_id:{place["place_id"]}'
 
-            attractions.append({
+            if type(types) is not None:
+                types.sort()
+                types = ', '.join(map(str, types))
+
+            places.append({
                 'name': name,
                 'address': address,
                 'rating': rating,
+                'rating_color': rating_color,
                 'total_ratings': total_ratings,
+                'total_rating_color': total_rating_color,
                 'price_level': price_level,
+                'price_color': price_color,
                 'is_open': is_open,
-                'status': status,
+                'open_color': open_color,
                 'types': types,
                 'link': link
             })
-        return attractions
+
+        sorted_places = sorted(places, reverse=True, key=lambda sort_key: sort_key['rating'])
+        for entry in sorted_places:
+            if entry["rating"] == 0:
+                entry["rating"] = "N/A"
+                entry["rating_color"] = "subtext0 italics"
+
+        return sorted_places
 
 
 @app.route("/itinerary")
@@ -164,9 +200,25 @@ async def index():
         form = await request.form
         session['location'] = form['location']
         session['radius'] = form['radius']
+
+        try:
+            radius = int(session['radius'])
+            if 1000 > radius > 50000:
+                session['error'] = "RadiusInvalid"
+        except ValueError:
+            session['error'] = "RadiusInvalid"
+            return redirect(url_for("index"))
+
         return redirect(url_for('itinerary'))
 
-    error = session.pop('error', "").split('\n')
+    raised_error = session.pop('error', "")
+
+    if "LocationNotFound" in raised_error:
+        error = "The requested location could not be found. Please enter a valid location."
+    elif "RadiusInvalid" in raised_error:
+        error = "The entered radius is invalid. Please enter a valid radius between 1000 and 50000."
+    else:
+        error = raised_error
     return await render_template("index.html", error=error)
 
 

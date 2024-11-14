@@ -1,29 +1,38 @@
 <html lang="en-US">
 <head>
     <title>Landing | team6_itineraryWebApp</title>
-    <link rel="stylesheet" href="/static/style.css"/>
+    <link href="/static/style.css" rel="stylesheet"/>
 </head>
 <body>
-    <h1>Welcome to team6's Itinerary!</h1>
-    {% if error|length > 1 %}
-        <div class="panel">
-            {% for para in error %}
-                <span class="red">{{para}}</span>
-                <br>
-            {% endfor %}
-        </div>
-    {% endif %}
-    <div class="panel">
+<h1 style="text-align: center">Welcome to team6's Itinerary!</h1>
+{% if error|length > 1 %}
+<div class="panel">
+    <p class="red" style="white-space: pre-wrap; text-align: center">
+        {{error}}
+    </p>
+</div>
+{% endif %}
+<div style="display: flex; align-items: center; justify-content: center; flex-direction: column">
+    <div class="panel" style="width: 30%; display: flex;">
         <form method="POST">
-            <label for="location">Enter your location of choice:</label>
-            <input type="text" name="location" id="location" value="Menomonie">
-            <br>
-            <label for="radius">Search Radius:</label>
-            <input type="text" name="radius" id="radius" value="5000">
-            <br>
-            <br>
-            <button type="submit">Submit</button>
+            <div style="margin: 4px 4px">
+                <label for="location">Enter your location of choice:</label>
+                <input id="location" name="location" style="right: 0;" type="text" value="Menomonie">
+            </div>
+            <div style="margin: 4px 4px">
+                <label for="radius">Search Radius:</label>
+                <input id="radius" name="radius" style="right: 0;" type="text" value="5000">
+            </div>
+            <button style="margin: 0 4px" type="submit">Submit</button>
         </form>
     </div>
+
+    <div class="panel" style="">
+        <h2 style="text-align: center">Cat</h2>
+        <img alt="A random cat from Cat As A Service"
+             loading="lazy" src="https://cataas.com/cat/cute"
+             style="display: block; max-height: 512px; height: auto; width: auto;">
+    </div>
+</div>
 </body>
 </html>

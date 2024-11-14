@@ -113,6 +113,14 @@ body {
         color: var(--lavender);
     }
 
+    .subtext0 {
+        color: var(--subtext0)
+    }
+
+    .italics {
+        font-style: italic;
+    }
+
     .itinerary {
         display: flex;
         flex-direction: column;
@@ -121,17 +129,16 @@ body {
     .panel {
         background: var(--surface0);
         padding: 4px;
-        margin: 8px 0;
+        margin: 8px 4px;
     }
 
     .sub_panel {
         background: var(--surface1);
-        margin-left: 12px;
+        margin: 2px 8px;
         padding: 4px;
     }
 
     .panel_title {
-        font-weight: bold;
         padding-left: 2px;
     }
 
@@ -162,6 +169,6 @@ body {
     .subtext {
         font-size: 10px;
         font-style: italic;
-        color: var(--subtext0);
+        color: var(--subtext1);
     }
 }
